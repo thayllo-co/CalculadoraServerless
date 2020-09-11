@@ -13,11 +13,15 @@ export default class Calculadora extends React.Component {
 
   calculate = () => {
     const { operation, num1, num2 } = this.state;
-    const gatewayURL = 'https://ep0d2t20ue.execute-api.us-east-2.amazonaws.com/methods/my-resource'
+    const gatewayURL = 'https://ep0d2t20ue.execute-api.us-east-2.amazonaws.com/methods'
       + '?num1=' + num1 + '&num2=' + num2 + '&operation=' + operation;
     axios({
       method: 'get',
       url: gatewayURL,
+      headers: {
+        "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+        "Access-Control-Allow-Credentials": true // Required for cookies, authorization headers with HTTPS 
+      },
     }).then(res => {
       this.setState({ result: res.data.body });
     }).catch(error => {
